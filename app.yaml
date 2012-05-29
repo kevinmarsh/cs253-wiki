@@ -1,0 +1,17 @@
+application: backburnerdev
+version: 7
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+- name: jinja2
+  version: latest
+
+handlers:
+- url: /style
+  static_dir: style
+
+- url: /.*
+  script: wiki_mapper.app
+  secure: always
