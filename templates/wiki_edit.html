@@ -1,0 +1,23 @@
+{% extends "wiki_template.html" %}
+
+{% block title %}
+    CS 253 Wiki - Create a New Page
+{% endblock %}
+
+{% block content %}
+
+        <h2>Edit This Page</h2>
+            
+        <form method="post">
+            <label>
+                <div>Content<span class="error">{{ errorContent }}</span></div>
+                <textarea name="content">{{ content }}</textarea>
+            </label>
+            
+            <input type="submit" value="Save">
+        </form>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

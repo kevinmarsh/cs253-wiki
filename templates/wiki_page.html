@@ -1,0 +1,12 @@
+{% extends "wiki_template.html" %}
+
+{% block title %}
+    CS 253 Wiki - {{ subject }}
+{% endblock %}
+
+{% block content %}
+        <div class="post-content">{{ content | safe }}</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
