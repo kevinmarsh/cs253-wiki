@@ -15,6 +15,7 @@
     {% if cookie %}
         {% if edit %}
             <a href="_edit{{ urlSlug }}"><em>Edit</em></a> |
+            <a href="_history{{ urlSlug }}"><em>History</em></a> |
         {% endif %}
         {{ cookie }} (<a href="logout?page={{ urlSlug }}">Logout</a>)
     {% else %}

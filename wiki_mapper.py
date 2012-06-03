@@ -3,7 +3,7 @@
 /opt/google_appengine/appcfg.py update ~/workspace/Wiki-Udacity253-Final
 '''
 
-from wiki import Homepage, WikiPage, EditPage, HistoryPage, FlushCache
+from wiki import Homepage, WikiPage, EditPage, HistoryPage
 from login import SignUp, Login, Logout
 
 import webapp2
@@ -15,8 +15,7 @@ app = webapp2.WSGIApplication([
                                ('/logout', Logout),
                                ('/_edit' + PAGE_RE, EditPage),
                                ('/_history' + PAGE_RE, HistoryPage),
-                               ('/flush', FlushCache),
-                               ('/', Homepage), 
                                (PAGE_RE, WikiPage),
+                               ('/', Homepage), 
                                ],
                               debug=True)

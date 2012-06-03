@@ -1,0 +1,49 @@
+{% extends "wiki_template.html" %}
+
+{% block title %}
+    CS 253 Wiki - {{ subject }} - History
+{% endblock %}
+
+{% block content %}
+    <style>
+        table {
+            text-align: left;
+            width: 100%;
+        }
+        tr, th{
+            padding: 12px 0;
+            
+        }
+        th {
+            font-weight: bold;
+        }
+    </style>
+    
+    <table>
+        <tr>
+            <th>Url</th>
+            <th>Content</th>
+            <th>Version</th>
+            <th>Date</th>
+        </tr>
+    {% for page in dbPage %}
+        <tr>
+            <td><a href="{{ page.url }}?version={{ page.version }}">{{ page.url }}</a></td>
+            <td>{{ page.content | truncate(25) }}</td>
+            <td>{{ page.version }}</td>
+            <td>{{ page.created.strftime('%B %d, %Y') }}</td>
+        </tr>
+        <!--
+            <div style="margin:20px 0">
+            <p><a href="{{ page.url }}?version={{ page.version }}">{{ page.url }}</a></p>
+            <p>{{ page.content | truncate(255) }}</p>
+            <p>{{ page.version }}</p>
+            <p>{{ page.created }}</p>
+        </div>
+        -->
+    {% endfor %}
+    </table>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
