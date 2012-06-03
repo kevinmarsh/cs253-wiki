@@ -15,7 +15,7 @@ app = webapp2.WSGIApplication([
                                ('/logout', Logout),
                                ('/_edit' + PAGE_RE, EditPage),
                                ('/_history' + PAGE_RE, HistoryPage),
-                               (PAGE_RE, WikiPage),
                                ('/', Homepage), 
+                               (PAGE_RE, WikiPage),
                                ],
                               debug=True)

@@ -9,57 +9,38 @@ jinja_environment = jinja2.Environment(autoescape=False,
 
 class Page(db.Model):
     "GAE db entity for wiki page"
-    #subject = db.StringProperty(required = True)
     content = db.StringProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
-    #modified = db.DateTimeProperty(auto_now = True)
     url = db.StringProperty(required = True)
     version = db.IntegerProperty(required = True)
 
 class Homepage(Handler):
     "display the homepage, a list of wiki pages"
     def get(self):
-        '''
-        self.write('This is the homepage, "get"')
-        '''
-        wikiPages = list(db.GqlQuery('SELECT * '
-                                     'FROM Page '
-                                     'ORDER BY modified DESC'))
+        wikiPages = list(db.GqlQuery('SELECT * FROM Page '
+                                     'ORDER BY created DESC'))
         cookie = self.request.cookies.get('username', '')
         self.render('wiki_home.html', 
                     cookie=cookie[:cookie.find('|')], 
                     wikiPages=wikiPages)
 
 class WikiPage(Handler):
-    "creates a new blog post, ensures no duplicate urls"
+    "displays page or redirects to edit if it doesn't exist and user signed in"
     def get(self, resource):
         urlSlug = urllib.unquote(resource)
-        ver = self.request.get('version')
+        version = self.request.get('version')
         cookie = self.request.cookies.get('username', '')
-
-        '''
-        self.write(dbPage)
-        self.write('<br>')
-        self.write(dbPage[0].version)
         
-                self.write(page.version)
-                self.write('<br>')
-
-        self.write(ver)
-        self.write('<br>')
-        self.write(urlSlug)
-        self.write('<br>')
-        '''
+        if not version: #if most up to date version
+            dbPage = list(db.GqlQuery('SELECT * FROM Page '
+                                      'WHERE url = :1 '
+                                      'ORDER BY version DESC', urlSlug)) #use list to only hit the db once
+        else:
+            dbPage = list(db.GqlQuery('SELECT * FROM Page '
+                                      'WHERE url = :1 '
+                                      'AND version = :2 '
+                                      'ORDER BY version DESC', urlSlug, int(version))) #use list to only hit the db once
         
-        dbPage = list(db.GqlQuery('SELECT * FROM Page '
-                                  'WHERE url = :1 '
-                                  'ORDER BY version DESC', urlSlug)) #use list to only hit the db once
-          
-        if ver:
-            for page in dbPage:
-                if int(page.version) == int(ver):
-                    temp = page
-            dbPage.insert(0, temp)
         if len(dbPage) > 0: #display page from db
             self.render('wiki_page.html', 
                         content=dbPage[0].content, 
