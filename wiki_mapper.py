@@ -10,12 +10,12 @@ import webapp2
 
 PAGE_RE = r'(/(?:[a-zA-Z0-9_-]+/?)*)'
 app = webapp2.WSGIApplication([
+                               ('/', Homepage),
                                ('/signup', SignUp),
                                ('/login', Login),
                                ('/logout', Logout),
                                ('/_edit' + PAGE_RE, EditPage),
                                ('/_history' + PAGE_RE, HistoryPage),
-                               ('/', Homepage), 
                                (PAGE_RE, WikiPage),
                                ],
                               debug=True)
