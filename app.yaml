@@ -1,5 +1,5 @@
-application: backburnerdev
-version: 7
+application: wiki-cs-253
+version: 1
 runtime: python27
 api_version: 1
 threadsafe: true

@@ -47,6 +47,8 @@ class SignUp(Handler):
         
     def get(self):
         page = self.request.get('page')
+        if not page:
+            page = '/'
         if self.request.cookies.get('username', '') != '': #if the user is already signed in, redirect away
             self.redirect(page)
         self.write_body()
@@ -94,6 +96,8 @@ class SignUp(Handler):
             user_db.put() #add user to database
             self.response.headers.add_header('Set-Cookie', 'username=%s; Path=/' % make_secure_val(str(user_username)))
             page = self.request.get('page')
+            if not page:
+                page = '/'
             self.redirect(page) #set cookie and redirect to page they were previously on
 
 class Login(Handler):
@@ -126,5 +130,7 @@ class Login(Handler):
 class Logout(Handler):
     def get(self):
         page = self.request.get('page')
+        if not page:
+            page = '/'
         self.response.headers.add_header('Set-Cookie', 'username=; Path=/; expires="Fri, 31-Dec-1954 23:59:59 GMT"')
         self.redirect(page)
